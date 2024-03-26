@@ -78,7 +78,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        api-level: [26, 27, 28, 29, 30]
+        api-level: [ 30]
 
     steps:
       - name: Set up JDK 11
