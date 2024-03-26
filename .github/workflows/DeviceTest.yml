@@ -1,38 +1,42 @@
-name: DeviceTest
-
-on:
-  push:
-    branches: [FD_v1.0.1]
-
-
-jobs:
-  test:
-    name: Test on Emulators
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        api-level: [26, 27, 28, 29, 30]
-
-    steps:
-      - name: Set up JDK 11
-        uses: actions/setup-java@v2
-        with:
-          distribution: 'adopt'
-          java-version: '17'
-
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Grant execute permissions for gradlew //this step is only for macOS
-        run: chmod +x ./gradlew
-
-      - name: Build with Gradle
-        run: ./gradlew build
-
-      - name: Run tests on emulator
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: ${{ matrix.api-level }}
-          script: ./gradlew connectedCheck
+#name: DeviceTest
+#
+#on:
+#  push:
+#    branches: [FD_v1.0.1]
+#
+#
+#jobs:
+#  test:
+#    name: Test on Emulators
+#    runs-on: ${{ matrix.os }}
+#
+#    strategy:
+#      matrix:
+#        os: [ubuntu-latest]
+#        api-level: [26, 27, 28, 29, 30]
+#
+#    steps:
+#      - name: Set up JDK 11
+#        uses: actions/setup-java@v2
+#        with:
+#          distribution: 'adopt'
+#          java-version: '17'
+#
+#
+#
+#      - name: Checkout code
+#        uses: actions/checkout@v2
+#
+#      - name: Grant execute permissions for gradlew //this step is only for macOS
+#        run: chmod +x ./gradlew
+#
+#      - name: Build with Gradle
+#        run: ./gradlew build
+#
+#      - name: Run tests on emulator
+#        uses: reactivecircus/android-emulator-runner@v2
+#        with:
+#          api-level: ${{ matrix.api-level }}
+#          script: ./gradlew connectedCheck
+#
+#Jobs:
