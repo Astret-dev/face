@@ -62,7 +62,7 @@ jobs:
 
 
       - name: Lint checking
-        run: ./gradlew lint
+        run:  bash ./gradlew lint
 
       - name: Upload Lint report
         uses: actions/upload-artifact@v3
@@ -127,7 +127,7 @@ jobs:
             adb devices    
 
       - name: run tests
-        run: ./gradlew connectedAndroidTest
+        run:  bash ./gradlew connectedAndroidTest
         env:
           EMULATOR_API_LEVEL: 29
           EMULATOR_SERIAL: emulator-5556
