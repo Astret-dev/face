@@ -39,7 +39,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         setContentView(binding.root)
         with(binding) {
 
-            binding.textView as ImageView
 
 
             val biometricUtils = BiometricUtils(this@MainActivity)
