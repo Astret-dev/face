@@ -69,7 +69,7 @@ jobs:
 #Testing
   Test:
     needs: upload
-    runs-on: {{matrix.os}}
+    runs-on: ${{matrix.os}}
     steps:
       - name: Enable KVM
         run: |
