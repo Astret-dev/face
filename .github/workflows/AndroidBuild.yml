@@ -6,7 +6,7 @@ on:
     branches : [FD_v1.0.1]
 
 jobs:
-#  checkout Repository
+#  checkout Repository, setup Java JDK, gradle
   Check-out:
     runs-on: ${{ matrix.os }}
 
@@ -18,6 +18,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.1.0
 
+      - name: Setup Java JDK
+        uses: actions/setup-java@v3.13.0
+        with:
+          java-version: '21'
+          distribution: 'adopt'
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v3
   # granting gradlew access
   permissions:
     needs: Check-out
@@ -46,17 +54,11 @@ jobs:
           path: app/build/reports/lint-results-debug.html
 
 
-
-
-
-
-
   #  Integrating project gradle , javaJDK , granting execute permissions for gradlew
 
   build:
-    needs: Lint
+    needs: permissions
     runs-on: ${{ matrix.os }}
-
 
 
     steps:
