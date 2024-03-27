@@ -6,7 +6,7 @@ on:
     branches : [FD_v1.0.1]
 
 jobs:
-#  Reportort checkout
+#  checkout Repository
   Check-out:
     runs-on: ${{ matrix.os }}
 
@@ -24,7 +24,7 @@ jobs:
     needs: Check-out
 
 
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     steps:
       - name: Lint checking
         uses: ./gradlew lint
