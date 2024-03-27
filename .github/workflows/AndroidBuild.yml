@@ -49,16 +49,16 @@ jobs:
         with:
           gradle-home-cache-cleanup: true
   #  Lint checking the source code , xml designs for warnings and errors
-#  Lint:
-#    needs: build
-#
-#    strategy:
-#      matrix:
-#        os: [ ubuntu-latest ]
-#
-#
-#    runs-on: ${{ matrix.os }}
-#    steps:
+  Lint:
+    needs: build
+
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+
+
+    runs-on: ${{ matrix.os }}
+    steps:
 
 
       - name: Lint checking
@@ -71,17 +71,17 @@ jobs:
           path: app/build/reports/lint-results-debug.html
 
 
-  #Building apk
-#  upload:
-#    needs: build
-#    runs-on: ${{ matrix.os }}
-#
-#    strategy:
-#      matrix:
-#        os: [ ubuntu-latest ]
-#
-#
-#    steps:
+#  Building apk
+  upload:
+    needs: build
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+
+
+    steps:
 
 
       #build a debug APK
@@ -113,11 +113,25 @@ jobs:
         with:
           name: release.aab
           path: ${{ steps.sign_app.outputs.signedReleaseFile }}
+  Unit_Test:
+    needs: build
+    runs-on: {{ matrix.os }}
+
+    steps:
+      - name: Run tests
+        run: ./gradlew testDebug
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-results
+          path: app/build/reports/tests
 
 
 
-#Testing
+  #Testing
   Test:
+    needs: Unit_Test
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -127,6 +141,7 @@ jobs:
     steps:
       - name: Enable KVM
         run: |
+          echo avdmanager list avd
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
