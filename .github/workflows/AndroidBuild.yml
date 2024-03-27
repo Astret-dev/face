@@ -62,7 +62,7 @@ jobs:
 
 
       - name: Lint checking
-        run:  bash ./gradlew lint
+        run:  ./gradlew lint
 
       - name: Upload Lint report
         uses: actions/upload-artifact@v3
@@ -87,7 +87,7 @@ jobs:
       #build a debug APK
 
       - name: Build debug APK
-        run: bash ./gradlew assembleDebug --stacktrace
+        run: ./gradlew assembleDebug --stacktrace
 
       - name: upload build Artifact
         uses: actions/upload-artifact@v3.1.3
