@@ -142,7 +142,7 @@ jobs:
             adb devices    
 
       - name: run tests
-        run:  bash ./gradlew connectedAndroidTest
+        run: ./gradlew connectedAndroidTest
         env:
           EMULATOR_API_LEVEL: 29
           EMULATOR_SERIAL: emulator-5556

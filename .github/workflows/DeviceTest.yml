@@ -30,7 +30,8 @@ jobs:
         run: echo no | avdmanager create avd -n test -k "system-images;android-29;default;x86"
 
       - name: Start Emulator
-        run: $ANDROID_HOME/emulator/emulator -avd test -no-audio -no-window -accel auto -gpu swiftshader_indirect
+        run:     $ANDROID_HOME/emulator/emulator -avd Pixel_8_Pro_API_VanillaIceCream -no-audio -no-window -accel auto -gpu swiftshader_indirect
+
 
       - name: Wait for Emulator to be ready
         run: |
