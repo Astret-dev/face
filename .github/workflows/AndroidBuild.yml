@@ -21,7 +21,7 @@ jobs:
   # granting gradlew access
   permissions:
     needs: Check-out
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
 
     steps:
       - name: Grant execute permissions for gradlew //this step is only for macOS
@@ -29,7 +29,7 @@ jobs:
 
       #  Lint checking the source code , xml designs for warnings and errors
   Lint:
-    needs: Check-out
+    needs: permissions
 
 
     runs-on: ubuntu-latest
