@@ -115,7 +115,7 @@ jobs:
           path: ${{ steps.sign_app.outputs.signedReleaseFile }}
   Unit_Test:
     needs: build
-    runs-on: {{ matrix.os }}
+    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Run tests
