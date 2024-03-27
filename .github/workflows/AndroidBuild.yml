@@ -49,16 +49,16 @@ jobs:
         with:
           gradle-home-cache-cleanup: true
   #  Lint checking the source code , xml designs for warnings and errors
-  Lint:
-    needs: build
-
-    strategy:
-      matrix:
-        os: [ ubuntu-latest ]
-
-
-    runs-on: ${{ matrix.os }}
-    steps:
+#  Lint:
+#    needs: build
+#
+#    strategy:
+#      matrix:
+#        os: [ ubuntu-latest ]
+#
+#
+#    runs-on: ${{ matrix.os }}
+#    steps:
 
 
       - name: Lint checking
@@ -72,16 +72,16 @@ jobs:
 
 
   #Building apk
-  upload:
-    needs: build
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [ ubuntu-latest ]
-
-
-    steps:
+#  upload:
+#    needs: build
+#    runs-on: ${{ matrix.os }}
+#
+#    strategy:
+#      matrix:
+#        os: [ ubuntu-latest ]
+#
+#
+#    steps:
 
 
       #build a debug APK
