@@ -10,7 +10,6 @@ jobs:
   #  Integrating project gradle , javaJDK , granting execute permissions for gradlew
 
   build:
-    needs: Lint
     runs-on: ${{ matrix.os }}
 
 
