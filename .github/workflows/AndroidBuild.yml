@@ -1,4 +1,6 @@
 name: AndroidBuild
+
+
 on:
   pull_request:
     branches : [FD_v1.0.1]
@@ -17,9 +19,8 @@ jobs:
         os: [ ubuntu-latest ]
 
 
-
     steps:
-      - name : Checkout
+      - name: Checkout
         uses: actions/checkout@v4.1.0
 
       - name: Setup Java JDK
@@ -51,6 +52,10 @@ jobs:
   Lint:
     needs: build
 
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+
 
     runs-on: ${{ matrix.os }}
     steps:
@@ -70,6 +75,12 @@ jobs:
   upload:
     needs: build
     runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+
+
     steps:
 
       - name: Debug Workflow Environment
@@ -93,6 +104,11 @@ jobs:
   Test:
     needs: upload
     runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+
     steps:
       - name: Enable KVM
         run: |
