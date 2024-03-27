@@ -112,7 +112,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: release.aab
-          path: ${{ steps.sign_bundle.outputs.signedReleaseFile }}
+          path: ${{ steps.sign_app.outputs.signedReleaseFile }}
 
 
 
