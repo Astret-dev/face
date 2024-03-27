@@ -83,10 +83,6 @@ jobs:
 
     steps:
 
-      - name: Debug Workflow Environment
-        run: |
-            echo "Current Directory: $(pwd)"
-            cd app/build/outputs/apk/debug
 
       #build a debug APK
 
