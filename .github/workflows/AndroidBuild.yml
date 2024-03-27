@@ -98,7 +98,6 @@ jobs:
 
 #Testing
   Test:
-    needs: upload
     runs-on: ${{ matrix.os }}
 
     strategy:
