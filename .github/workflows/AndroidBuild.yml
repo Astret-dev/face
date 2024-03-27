@@ -6,13 +6,37 @@ on:
     branches : [FD_v1.0.1]
 
 jobs:
-#  Integrating project gradle , javaJDK , granting execute permissions for gradlew
-  build:
+#  Lint checking the source code , xml designs for warnings and errors
+  Lint:
     runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
         os: [ ubuntu-latest ]
+
+    steps:
+      - name: Lint checking
+        uses: ./gradlew lint
+
+      - name: Upload Lint report
+        uses: actions/upload-artifact@v3
+        with:
+          name: Lint-Report
+          path: app/build/reports/lint-results-debug.html
+
+
+
+
+
+
+
+  #  Integrating project gradle , javaJDK , granting execute permissions for gradlew
+
+  build:
+    needs: Lint
+    runs-on: ${{ matrix.os }}
+
+
 
     steps:
       - name : Checkout
@@ -46,7 +70,7 @@ jobs:
 #Building apk
   upload:
     needs: build
-    runs-on: ${{matrix.os}}
+    runs-on: ${{ matrix.os }}
     steps:
 
       - name: Debug Workflow Environment
@@ -69,7 +93,7 @@ jobs:
 #Testing
   Test:
     needs: upload
-    runs-on: ${{matrix.os}}
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Enable KVM
         run: |
