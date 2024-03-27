@@ -22,9 +22,9 @@ jobs:
   #  Lint checking the source code , xml designs for warnings and errors
   Lint:
     needs: Check-out
+
+
     runs-on: ${{ matrix.os }}
-
-
     steps:
       - name: Lint checking
         uses: ./gradlew lint
