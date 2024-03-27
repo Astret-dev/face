@@ -9,7 +9,7 @@ on:
 
 jobs:
 
-  #  Integrating project gradle , javaJDK , granting execute permissions for gradlew
+#  building project gradle, gradlew access granting ...
 
   build:
     runs-on: ${{ matrix.os }}
