@@ -97,14 +97,13 @@ jobs:
 
 # signing bundle AAB
       - name: Build Release Bundle
-        run: ./gradlew bundle
+        run: ./gradlew bundleRelease
 
-
-      - uses: r0adkll/sign-android-release@v1
-        name: Sign Bundle
+      - name: Sign Bundle
+        uses: r0adkll/sign-android-release@v1
         id: sign_app
         with:
-          releaseDirectory: app/release/app-release.aab
+          releaseDirectory: app/release
           signingKeyBase64: ${{ secrets.FACEKEY }}
           alias: ${{ secrets.ALIAS }}
           keyStorePassword: ${{ secrets.FACEPASSWORD }}
@@ -113,7 +112,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: release.aab
-          path: ${{steps.sign_app.outputs.signedReleaseFile}}
+          path: ${{ steps.sign_bundle.outputs.signedReleaseFile }}
 
 
 
