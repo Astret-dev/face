@@ -6,60 +6,13 @@ on:
     branches : [FD_v1.0.1]
 
 jobs:
-#  checkout Repository, setup Java JDK, gradle
-  Check-out:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [ ubuntu-latest ]
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.0
-
-      - name: Setup Java JDK
-        uses: actions/setup-java@v3.13.0
-        with:
-          java-version: '21'
-          distribution: 'adopt'
-
-
-  # granting gradlew access
-  permissions:
-    needs: Check-out
-    runs-on: ubuntu-latest
-    steps:
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v3
-
-      - name: Grant execute permissions for gradlew //this step is only for macOS
-        run: chmod +x ./gradlew
-
-      #  Lint checking the source code , xml designs for warnings and errors
-  Lint:
-    needs: permissions
-
-
-    runs-on: ubuntu-latest
-    steps:
-
-
-      - name: Lint checking
-        run: ./gradlew lint
-
-      - name: Upload Lint report
-        uses: actions/upload-artifact@v3
-        with:
-          name: Lint-Report
-          path: app/build/reports/lint-results-debug.html
-
 
   #  Integrating project gradle , javaJDK , granting execute permissions for gradlew
 
   build:
-    needs: permissions
+    needs: Lint
     runs-on: ${{ matrix.os }}
+
 
 
     steps:
@@ -91,7 +44,26 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
           gradle-home-cache-cleanup: true
-#Building apk
+  #  Lint checking the source code , xml designs for warnings and errors
+  Lint:
+    needs: build
+
+
+    runs-on: ubuntu-latest
+    steps:
+
+
+      - name: Lint checking
+        run: ./gradlew lint
+
+      - name: Upload Lint report
+        uses: actions/upload-artifact@v3
+        with:
+          name: Lint-Report
+          path: app/build/reports/lint-results-debug.html
+
+
+  #Building apk
   upload:
     needs: build
     runs-on: ${{ matrix.os }}
