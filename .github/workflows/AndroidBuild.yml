@@ -9,16 +9,12 @@ on:
 
 jobs:
 
-#  building project gradle, gradlew access granting ...
-
+  # Build job
   build:
     runs-on: ${{ matrix.os }}
-
     strategy:
       matrix:
         os: [ ubuntu-latest ]
-
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.0
@@ -35,31 +31,23 @@ jobs:
       - name: Grant execute permissions for gradlew //this step is only for macOS
         run: chmod +x ./gradlew
 
-        #build gradle
-
       - name: Build with Gradle
         run: ./gradlew build
-
-
-
-      #Setup Gradle Cache to improve the speed of the workflows
 
       - name: Setup Gradle Cache
         uses: gradle/gradle-build-action@v2
         with:
           gradle-home-cache-cleanup: true
-  #  Lint checking the source code , xml designs for warnings and errors
-#  Lint:
-#    needs: build
-#
-#    strategy:
-#      matrix:
-#        os: [ ubuntu-latest ]
-#
-#
-#    runs-on: ${{ matrix.os }}
-#    steps:
 
+  # Lint job
+  lint:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.0
 
       - name: Lint checking
         run:  ./gradlew lint
@@ -70,26 +58,20 @@ jobs:
           name: Lint-Report
           path: app/build/reports/lint-results-debug.html
 
-
-  #Building apk
-#  upload:
-#    needs: build
-#    runs-on: ${{ matrix.os }}
-#
-#    strategy:
-#      matrix:
-#        os: [ ubuntu-latest ]
-#
-#
-#    steps:
-
-
-      #build a debug APK
+  # APK build job
+  apk_build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.0
 
       - name: Build debug APK
         run: ./gradlew assembleDebug --stacktrace
 
-      - name: upload build Artifact
+      - name: Upload build Artifact
         uses: actions/upload-artifact@v3.1.3
         with:
           name: Face_Detection.apk
