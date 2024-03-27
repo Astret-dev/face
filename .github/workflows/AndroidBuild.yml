@@ -6,13 +6,24 @@ on:
     branches : [FD_v1.0.1]
 
 jobs:
-#  Lint checking the source code , xml designs for warnings and errors
-  Lint:
+#  Reportort checkout
+  Check-out:
     runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
         os: [ ubuntu-latest ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.0
+
+
+  #  Lint checking the source code , xml designs for warnings and errors
+  Lint:
+    needs: Check-out
+    runs-on: ${{ matrix.os }}
+
 
     steps:
       - name: Lint checking
