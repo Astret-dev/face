@@ -136,7 +136,7 @@ jobs:
         with:
           api-level: 29
           script: |
-            emulator @Pixel_8_Pro -no-snapshot -no-window -no-audio -wipe-data -timezone America/New_York
+            $ANDROID_HOME/emulator/emulator -avd Pixel_8_Pro_API_VanillaIceCream -no-audio -no-window -accel auto -gpu swiftshader_indirect
             adb wait-for-device
             echo Emulator started successfully
             adb devices    
