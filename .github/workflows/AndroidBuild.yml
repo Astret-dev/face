@@ -41,6 +41,7 @@ jobs:
 
   # Lint job
   lint:
+    needs: build
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -60,6 +61,7 @@ jobs:
 
   # APK build job
   apk_build:
+    needs: build
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
