@@ -104,7 +104,7 @@ jobs:
         name: Sign Bundle
         id: sign_app
         with:
-          releaseDirectory: app/release
+          releaseDirectory: app/release/app-release.aab
           signingKeyBase64: ${{ secrets.FACEKEY }}
           alias: ${{ secrets.ALIAS }}
           keyStorePassword: ${{ secrets.FACEPASSWORD }}
