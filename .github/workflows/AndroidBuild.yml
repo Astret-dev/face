@@ -18,16 +18,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.1.0
 
+  # granting gradlew access
+  permissions:
+    needs: Check-out
+    runs-on: ${{ matrix.os }}
 
-  #  Lint checking the source code , xml designs for warnings and errors
+    steps:
+      - name: Grant execute permissions for gradlew //this step is only for macOS
+        run: chmod +x ./gradlew
+
+      #  Lint checking the source code , xml designs for warnings and errors
   Lint:
     needs: Check-out
 
 
     runs-on: ubuntu-latest
     steps:
-      - name: checkout
-        uses: actions/checkout@v4.1.0
+
 
       - name: Lint checking
         run: ./gradlew lint
