@@ -195,7 +195,7 @@ jobs:
       - name: Start emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 29
+          api-level: 35
           script: |
             $ANDROID_HOME/emulator/emulator -avd Pixel_8_Pro_API_VanillaIceCream -no-audio -no-window -accel auto -gpu swiftshader_indirect
             adb wait-for-device
@@ -205,7 +205,7 @@ jobs:
       - name: run tests
         run: ./gradlew connectedAndroidTest
         env:
-          EMULATOR_API_LEVEL: 29
+          EMULATOR_API_LEVEL: 35
           EMULATOR_SERIAL: emulator-5554
 
 
