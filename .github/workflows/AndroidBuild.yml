@@ -95,6 +95,27 @@ jobs:
           name: Face_Detection.apk
           path: app/build/outputs/apk/debug/app-debug.apk
 
+# signing bundle AAB
+      - name: Build Release Bundle
+        run: ./gradlew bundle
+
+
+      - uses: r0adkll/sign-android-release@v1
+        name: Sign Bundle
+        id: sign_app
+        with:
+          releaseDirectory: app/release
+          signingKeyBase64: ${{ secrets.FACEKEY }}
+          alias: ${{ secrets.ALIAS }}
+          keyStorePassword: ${{ secrets.FACEPASSWORD }}
+
+      - name: Upload Bundle
+        uses: actions/upload-artifact@v2
+        with:
+          name: release.aab
+          path: ${{steps.sign_app.outputs.signedReleaseFile}}
+
+
 
 #Testing
   Test:
