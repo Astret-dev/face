@@ -225,7 +225,7 @@ jobs:
         run: ./gradlew connectedAndroidTest
         env:
           EMULATOR_API_LEVEL: 35
-          EMULATOR_SERIAL: emulator-5554
+          EMULATOR_SERIAL: emulator-5556
 
 
       
