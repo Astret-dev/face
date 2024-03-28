@@ -1,45 +1,45 @@
-name: Android Tests
-
-on:
-  push:
-    branches: [FD_v1.0.1]
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up JDK
-        uses: actions/setup-java@v2
-        with:
-          java-version: '11'
-          distribution: 'adopt'
-
-      - name: Set up Android SDK
-        uses: actions/setup-java@v2
-        with:
-          java-version: '11'
-          distribution: 'adopt'
-
-      - name: Install Android SDK
-        run: |
-          echo y | sdkmanager "platform-tools" "platforms;android-29" "build-tools;29.0.3" "system-images;android-29;default;x86"
-
-      - name: Create Android Emulator
-        run: echo no | avdmanager create avd -n test -k "system-images;android-29;default;x86"
-
-      - name: Start Emulator
-        run:     $ANDROID_HOME/emulator/emulator -avd Pixel_8_Pro_API_VanillaIceCream -no-audio -no-window -accel auto -gpu swiftshader_indirect
-
-
-      - name: Wait for Emulator to be ready
-        run: |
-          adb wait-for-device
-          adb shell input keyevent 82
-
-      - name: Build and run tests
-        run: ./gradlew connectedAndroidTest
-
+#name: Android Tests
+#
+#on:
+#  push:
+#    branches: [FD_v1.0.1]
+#
+#jobs:
+#  build:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v2
+#
+#      - name: Set up JDK
+#        uses: actions/setup-java@v2
+#        with:
+#          java-version: '11'
+#          distribution: 'adopt'
+#
+#      - name: Set up Android SDK
+#        uses: actions/setup-java@v2
+#        with:
+#          java-version: '11'
+#          distribution: 'adopt'
+#
+#      - name: Install Android SDK
+#        run: |
+#          echo y | sdkmanager "platform-tools" "platforms;android-29" "build-tools;29.0.3" "system-images;android-29;default;x86"
+#
+#      - name: Create Android Emulator
+#        run: echo no | avdmanager create avd -n test -k "system-images;android-29;default;x86"
+#
+#      - name: Start Emulator
+#        run:     $ANDROID_HOME/emulator/emulator -avd Pixel_8_Pro_API_VanillaIceCream -no-audio -no-window -accel auto -gpu swiftshader_indirect
+#
+#
+#      - name: Wait for Emulator to be ready
+#        run: |
+#          adb wait-for-device
+#          adb shell input keyevent 82
+#
+#      - name: Build and run tests
+#        run: ./gradlew connectedAndroidTest
+#

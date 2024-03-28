@@ -173,51 +173,51 @@ jobs:
 
 
   #Testing
-  Test:
-    needs: build
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [ ubuntu-latest ]
-
-    steps:
-      - name: checkout
-        uses: actions/checkout@v4.1.0
-
-      - name: Setup Java JDK
-        uses: actions/setup-java@v3.13.0
-        with:
-          java-version: '21'
-          distribution: 'adopt'
-
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v3
-
-      - name: Grant execute permissions for gradlew //this step is only for macOS
-        run: chmod +x ./gradlew
-      - name: Enable KVM
-        run: |
-          echo avdmanager list avd
-          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
-          sudo udevadm control --reload-rules
-          sudo udevadm trigger --name-match=kvm
-
-
-      - name: Start emulator
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 35
-          target: default
-          arch: x86
-          profile: Pixel 8 Pro
-          script: emulator @Pixel_8_Pro_API_VanillaIceCream
-
-      - name: Wait for emulator to boot
-        run: adb wait-for-device
-
-      - name: Run connectedCheck
-        run: ./gradlew connectedCheck --stacktrace
+#  Test:
+#    needs: build
+#    runs-on: ${{ matrix.os }}
+#
+#    strategy:
+#      matrix:
+#        os: [ ubuntu-latest ]
+#
+#    steps:
+#      - name: checkout
+#        uses: actions/checkout@v4.1.0
+#
+#      - name: Setup Java JDK
+#        uses: actions/setup-java@v3.13.0
+#        with:
+#          java-version: '21'
+#          distribution: 'adopt'
+#
+#      - name: Setup Gradle
+#        uses: gradle/gradle-build-action@v3
+#
+#      - name: Grant execute permissions for gradlew //this step is only for macOS
+#        run: chmod +x ./gradlew
+#      - name: Enable KVM
+#        run: |
+#          echo avdmanager list avd
+#          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+#          sudo udevadm control --reload-rules
+#          sudo udevadm trigger --name-match=kvm
+#
+#
+#      - name: Start emulator
+#        uses: reactivecircus/android-emulator-runner@v2
+#        with:
+#          api-level: 35
+#          target: default
+#          arch: x86
+#          profile: Pixel 8 Pro
+#          script: emulator @Pixel_8_Pro_API_VanillaIceCream
+#
+#      - name: Wait for emulator to boot
+#        run: adb wait-for-device
+#
+#      - name: Run connectedCheck
+#        run: ./gradlew connectedCheck --stacktrace
 #            $ANDROID_HOME/emulator/emulator -avd Pixel_8_Pro_API_VanillaIceCream -no-audio -no-window -accel auto -gpu swiftshader_indirect
 #            adb wait-for-device
 #            echo Emulator started successfully

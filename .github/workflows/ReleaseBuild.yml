@@ -1,6 +1,7 @@
 name: ReleaseBuild
 on:
-  workflow_dispatch:
+  push:
+    branches: [ FD_v1.0.1 ]
 
 jobs:
   release:
