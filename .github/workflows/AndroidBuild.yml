@@ -117,24 +117,24 @@ jobs:
           name: Face_Detection.apk
           path: app/build/outputs/apk/debug/app-debug.apk
 
-# signing bundle AAB
-      - name: Build Release Bundle
-        run: ./gradlew bundleRelease
-
-      - name: Sign Bundle
-        uses: r0adkll/sign-android-release@v1
-        id: sign_app
-        with:
-          releaseDirectory: app/release
-          signingKeyBase64: ${{ secrets.FACEKEY }}
-          alias: ${{ secrets.ALIAS }}
-          keyStorePassword: ${{ secrets.FACEPASSWORD }}
-
-      - name: Upload Bundle
-        uses: actions/upload-artifact@v4
-        with:
-          name: release.aab
-          path: ${{ steps.sign_app.outputs.signedReleaseFile }}
+## signing bundle AAB
+#      - name: Build Release Bundle
+#        run: ./gradlew bundleRelease
+#
+#      - name: Sign Bundle
+#        uses: r0adkll/sign-android-release@v1
+#        id: sign_app
+#        with:
+#          releaseDirectory: app/release
+#          signingKeyBase64: ${{ secrets.FACEKEY }}
+#          alias: ${{ secrets.ALIAS }}
+#          keyStorePassword: ${{ secrets.FACEPASSWORD }}
+#
+#      - name: Upload Bundle
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: release.aab
+#          path: ${{ steps.sign_app.outputs.signedReleaseFile }}
   Unit_Test:
     needs: build
     runs-on: ${{ matrix.os }}
@@ -170,62 +170,62 @@ jobs:
 
 
 
-  #Testing
-#  Test:
-#    needs: build
-#    runs-on: ${{ matrix.os }}
-#
-#    strategy:
-#      matrix:
-#        os: [ ubuntu-latest ]
-#
-#    steps:
-#      - name: checkout
-#        uses: actions/checkout@v4.1.0
-#
-#      - name: Setup Java JDK
-#        uses: actions/setup-java@v3.13.0
-#        with:
-#          java-version: '21'
-#          distribution: 'adopt'
-#
-#      - name: Setup Gradle
-#        uses: gradle/gradle-build-action@v3
-#
-#      - name: Grant execute permissions for gradlew //this step is only for macOS
-#        run: chmod +x ./gradlew
-#      - name: Enable KVM
-#        run: |
-#          echo avdmanager list avd
-#          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
-#          sudo udevadm control --reload-rules
-#          sudo udevadm trigger --name-match=kvm
-#
-#
-#      - name: Start emulator
-#        uses: reactivecircus/android-emulator-runner@v2
-#        with:
-#          api-level: 35
-#          target: default
-#          arch: x86
-#          profile: Pixel 8 Pro
-#          script: emulator @Pixel_8_Pro_API_VanillaIceCream
-#
-#      - name: Wait for emulator to boot
-#        run: adb wait-for-device
-#
-#      - name: Run connectedCheck
-#        run: ./gradlew connectedCheck --stacktrace
-#            $ANDROID_HOME/emulator/emulator -avd Pixel_8_Pro_API_VanillaIceCream -no-audio -no-window -accel auto -gpu swiftshader_indirect
-#            adb wait-for-device
-#            echo Emulator started successfully
-#            adb devices
-#
-#      - name: run tests
-#        run: ./gradlew connectedAndroidTest
-#        env:
-#          EMULATOR_API_LEVEL: 35
-#          EMULATOR_SERIAL: emulator-5554
+#  Testing
+  Test:
+    needs: build
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4.1.0
+
+      - name: Setup Java JDK
+        uses: actions/setup-java@v3.13.0
+        with:
+          java-version: '21'
+          distribution: 'adopt'
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v3
+
+      - name: Grant execute permissions for gradlew //this step is only for macOS
+        run: chmod +x ./gradlew
+      - name: Enable KVM
+        run: |
+          echo avdmanager list avd
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+
+      - name: Start emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: default
+          arch: x86
+          profile: Pixel 8 Pro
+          script: emulator @Pixel_8_Pro_API_VanillaIceCream
+
+      - name: Wait for emulator to boot
+        run: adb wait-for-device
+
+      - name: Run connectedCheck
+        run: ./gradlew connectedCheck --stacktrace
+            $ANDROID_HOME/emulator/emulator -avd Pixel_8_Pro_API_VanillaIceCream -no-audio -no-window -accel auto -gpu swiftshader_indirect
+            adb wait-for-device
+            echo Emulator started successfully
+            adb devices
+
+      - name: run tests
+        run: ./gradlew connectedAndroidTest
+        env:
+          EMULATOR_API_LEVEL: 35
+          EMULATOR_SERIAL: emulator-5554
 
 
       
