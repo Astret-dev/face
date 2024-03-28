@@ -177,7 +177,7 @@ jobs:
 
   #Testing
   Test:
-    needs: Unit_Test
+    needs: build
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -196,17 +196,21 @@ jobs:
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 35
-          script: |
-            $ANDROID_HOME/emulator/emulator -avd Pixel_8_Pro_API_VanillaIceCream -no-audio -no-window -accel auto -gpu swiftshader_indirect
-            adb wait-for-device
-            echo Emulator started successfully
-            adb devices    
+          target: default
+          arch: x86
+          profile: Pixel 8 Pro
 
-      - name: run tests
-        run: ./gradlew connectedAndroidTest
-        env:
-          EMULATOR_API_LEVEL: 35
-          EMULATOR_SERIAL: emulator-5554
+          script: ./gradlew connectedCheck --stacktrace
+#            $ANDROID_HOME/emulator/emulator -avd Pixel_8_Pro_API_VanillaIceCream -no-audio -no-window -accel auto -gpu swiftshader_indirect
+#            adb wait-for-device
+#            echo Emulator started successfully
+#            adb devices
+#
+#      - name: run tests
+#        run: ./gradlew connectedAndroidTest
+#        env:
+#          EMULATOR_API_LEVEL: 35
+#          EMULATOR_SERIAL: emulator-5554
 
 
       
