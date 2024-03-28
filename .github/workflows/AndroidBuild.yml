@@ -1,6 +1,5 @@
 name: AndroidBuild
 
-
 on:
   pull_request:
     branches : [FD_v1.0.1]
@@ -8,8 +7,6 @@ on:
     branches : [FD_v1.0.1]
 
 jobs:
-
-#  building project gradle, gradlew access granting ...
 
   build:
     runs-on: ${{ matrix.os }}
@@ -206,6 +203,7 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
 
+
       - name: Start emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
@@ -214,7 +212,11 @@ jobs:
           arch: x86
           profile: Pixel 8 Pro
 
-          script: ./gradlew connectedCheck --stacktrace
+      - name: Wait for emulator to boot
+        run: adb wait-for-device
+
+      - name: Run connectedCheck
+        run: ./gradlew connectedCheck --stacktrace
 #            $ANDROID_HOME/emulator/emulator -avd Pixel_8_Pro_API_VanillaIceCream -no-audio -no-window -accel auto -gpu swiftshader_indirect
 #            adb wait-for-device
 #            echo Emulator started successfully
