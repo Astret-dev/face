@@ -1,27 +1,30 @@
-#name: Android Tests
-#
-#on:
-#  push:
-#    branches: [FD_v1.0.1]
-#
-#jobs:
-#  build:
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#      - name: Checkout code
-#        uses: actions/checkout@v2
-#
-#      - name: Set up JDK
-#        uses: actions/setup-java@v2
-#        with:
-#          java-version: '11'
-#          distribution: 'adopt'
-#
+name: Android Tests
+
+on:
+  push:
+    branches: [FD_v1.0.1]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '21'
+          distribution: 'adopt'
+
+      - name: Grant execute permissions for gradlew //this step is only for macOS
+        run: chmod +x ./gradlew
+
 #      - name: Set up Android SDK
 #        uses: actions/setup-java@v2
 #        with:
-#          java-version: '11'
+#          java-version: '21'
 #          distribution: 'adopt'
 #
 #      - name: Install Android SDK
@@ -36,10 +39,10 @@
 #
 #
 #      - name: Wait for Emulator to be ready
-#        run: |
+#        run: |A
 #          adb wait-for-device
 #          adb shell input keyevent 82
-#
-#      - name: Build and run tests
-#        run: ./gradlew connectedAndroidTest
-#
+
+      - name: Build and run tests
+        run: ./gradlew connectedAndroidTest
+
