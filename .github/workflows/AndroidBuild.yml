@@ -205,11 +205,11 @@ jobs:
       - name: Start emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 35
+          api-level: 34
           target: default
           arch: x86
-          profile: Pixel 8 Pro
-          script: emulator @Pixel_8_Pro_API_VanillaIceCream
+          profile: Pixel 3a
+          script: emulator @Pixel_3a_API_34_extension_level_7_x86_64
 
       - name: Wait for emulator to boot
         run: adb wait-for-device
@@ -224,7 +224,7 @@ jobs:
       - name: run tests
         run: ./gradlew connectedAndroidTest
         env:
-          EMULATOR_API_LEVEL: 35
+          EMULATOR_API_LEVEL: 34
           EMULATOR_SERIAL: emulator-5556
 
 
