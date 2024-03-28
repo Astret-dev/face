@@ -211,6 +211,7 @@ jobs:
           target: default
           arch: x86
           profile: Pixel 8 Pro
+          script: emulator @Pixel_8_Pro_API_VanillaIceCream
 
       - name: Wait for emulator to boot
         run: adb wait-for-device
