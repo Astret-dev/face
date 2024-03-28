@@ -200,7 +200,7 @@ jobs:
           arch: x86
           profile: Pixel 8 Pro
 
-          run: ./gradlew connectedCheck --stacktrace
+          script: ./gradlew connectedCheck --stacktrace
 #            $ANDROID_HOME/emulator/emulator -avd Pixel_8_Pro_API_VanillaIceCream -no-audio -no-window -accel auto -gpu swiftshader_indirect
 #            adb wait-for-device
 #            echo Emulator started successfully
