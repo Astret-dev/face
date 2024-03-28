@@ -1,7 +1,7 @@
 name: ReleaseBuild
 on:
-  push:
-    branches: [ FD_v1.0.1 ]
+  workflow_dispatch:
+
 
 jobs:
   release:
@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v4.1.0
 
       - name: Setup Java JDK
-        uses: actions/setup-java@v3.13.0
+        uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'adopt'
@@ -36,7 +36,7 @@ jobs:
           keyStorePassword: ${{ secrets.FACEPASSWORD }}
 
       - name: Upload Bundle
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: release.aab
           path: ${{ steps.sign_app.outputs.signedReleaseFile }}
