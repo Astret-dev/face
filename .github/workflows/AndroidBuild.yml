@@ -177,6 +177,8 @@ jobs:
 
     strategy:
       matrix:
+        api-level: [23,24,25,26,27,28,29,30]
+        target: [default, google_apis]
         os: [ ubuntu-latest ]
 
     steps:
@@ -194,6 +196,8 @@ jobs:
 
       - name: Grant execute permissions for gradlew //this step is only for macOS
         run: chmod +x ./gradlew
+
+
       - name: Enable KVM
         run: |
           echo avdmanager list avd
@@ -205,7 +209,7 @@ jobs:
       - name: Start emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 29
+          api-level: ${{ matrix.api-level }}
           script: ./gradlew connectedCheck
 
 
