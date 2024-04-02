@@ -177,7 +177,7 @@ jobs:
 
     strategy:
       matrix:
-        api-level: [23,24,25,26,27,28,29,30]
+        api-level: [34,35]
         target: [default]
         os: [ ubuntu-latest ]
 
