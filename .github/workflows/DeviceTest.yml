@@ -10,7 +10,7 @@ jobs:
 
     strategy:
       matrix:
-        api-level: [ 34,35 ]
+        api-level: [ 29 ]
         os: [ ubuntu-latest ]
 
     steps:
