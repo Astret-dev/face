@@ -8,18 +8,49 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    strategy:
+      matrix:
+        api-level: [ 34,35 ]
+        target: [ default ]
+        os: [ ubuntu-latest ]
 
-      - name: Set up JDK
-        uses: actions/setup-java@v2
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4.1.0
+
+      - name: Setup Java JDK
+        uses: actions/setup-java@v3.13.0
         with:
           java-version: '21'
           distribution: 'adopt'
 
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v3
+
       - name: Grant execute permissions for gradlew //this step is only for macOS
         run: chmod +x ./gradlew
+
+
+      - name: Enable KVM
+        run: |
+          echo avdmanager list avd
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+
+      - name: Start emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          script: ./gradlew connectedCheck
+
+
+      - name: Upload Instrumentation test report
+        uses: actions/upload-artifact@v4
+        with:
+          name: instrumentation_test_report
+          path: app\build\reports\androidTests\connected
 
 #      - name: Set up Android SDK
 #        uses: actions/setup-java@v2
@@ -43,6 +74,4 @@ jobs:
 #          adb wait-for-device
 #          adb shell input keyevent 82
 
-      - name: Build and run tests
-        run: ./gradlew connectedAndroidTest
 
