@@ -1,4 +1,4 @@
-package com.example.facedetection
+package com.example.facedetection.screens
 
 import android.app.Activity
 import android.content.Intent
@@ -14,6 +14,8 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.example.facedetection.BiometricUtils
+import com.example.facedetection.R
 import com.example.facedetection.cosineSimilarity.isFaceMatching
 import com.example.facedetection.databinding.ActivityMainBinding
 

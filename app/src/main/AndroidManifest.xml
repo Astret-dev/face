@@ -4,7 +4,14 @@
 
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-feature android:name="android.hardware.camera" />
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <uses-permission android:name="android.permission.READ_PHONE_NUMBERS"/>
+    <uses-permission android:name="android.permission.READ_BASIC_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_SMS" />
 
 
 
@@ -19,8 +26,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FaceDetection"
         tools:targetApi="31">
-        <activity
-            android:name=".MainActivity"
+        <activity android:name=".screens.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,6 +34,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".screens.MainActivity"
+            android:exported="true">
+        </activity>
+
+        <receiver android:name=".OtpReciever"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.provider.telephony"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
